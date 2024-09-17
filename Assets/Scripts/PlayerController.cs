@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private float _raycastDistance = 0.2f;
+    private float _radiusSphere = 0.3f;
     private CapsuleCollider _capsuleCollider;
     private bool _isGrounded;
    
-    private int maxLength = 1;
+    private int _maxLength = 1;
+
+    private int _health = 100;
 
     private void Start()
     {
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
         Move();
         CheckingPressedKey();
 
-        if (Physics.CheckSphere(_groundCheckerTransform.position, 0.3f, _notPlayerMask))
+        if (Physics.CheckSphere(_groundCheckerTransform.position, _radiusSphere, _notPlayerMask))
         {
             _animator.SetBool("IsInAir", false);
             _isGrounded = true;
@@ -52,9 +54,9 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(directionVector), Time.deltaTime * _rotationeSpeed);
         }
 
-        _animator.SetFloat("speed", Vector3.ClampMagnitude(directionVector, maxLength).magnitude);
+        _animator.SetFloat("speed", Vector3.ClampMagnitude(directionVector, _maxLength).magnitude);
 
-        Vector3 moveDir = Vector3.ClampMagnitude(directionVector, maxLength) * _speed;// теперь ограничиваем движение и двигаемся с 1
+        Vector3 moveDir = Vector3.ClampMagnitude(directionVector, _maxLength) * _speed;// теперь ограничиваем движение и двигаемся с 1
         _rigidbody.velocity = new Vector3(moveDir.x, _rigidbody.velocity.y, moveDir.z);
 
         _rigidbody.angularVelocity = Vector3.zero;// вектор угловой скорости чтобы небыло вращения на месте 
@@ -114,5 +116,11 @@ public class PlayerController : MonoBehaviour
         _speed = speedStandart;
         _capsuleCollider.height = heightCollayderOriginal;
         _capsuleCollider.center = new Vector3(_capsuleCollider.center.x, sizeCollayderYOriginal, _capsuleCollider.center.z);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        Debug.Log(_health);
     }
 }
