@@ -1,19 +1,25 @@
+п»їusing System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _rotationeSpeed =  10f;
+    [SerializeField] private float _rotationeSpeed = 10f;
     [SerializeField] private float _speed = 4f;
     [SerializeField] private Transform _groundCheckerTransform;
     [SerializeField] private LayerMask _notPlayerMask;
     [SerializeField] private float _jumpForce = 2f;
+
+    [SerializeField] public Slider _slider;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
     private float _radiusSphere = 0.3f;
     private CapsuleCollider _capsuleCollider;
     private bool _isGrounded;
-   
+
+
+
     private int _maxLength = 1;
 
     private int _health = 100;
@@ -23,6 +29,7 @@ public class PlayerController : MonoBehaviour
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _slider.maxValue = _health;
     }
 
     private void Update()
@@ -56,10 +63,10 @@ public class PlayerController : MonoBehaviour
 
         _animator.SetFloat("speed", Vector3.ClampMagnitude(directionVector, _maxLength).magnitude);
 
-        Vector3 moveDir = Vector3.ClampMagnitude(directionVector, _maxLength) * _speed;// теперь ограничиваем движение и двигаемся с 1
+        Vector3 moveDir = Vector3.ClampMagnitude(directionVector, _maxLength) * _speed;
         _rigidbody.velocity = new Vector3(moveDir.x, _rigidbody.velocity.y, moveDir.z);
 
-        _rigidbody.angularVelocity = Vector3.zero;// вектор угловой скорости чтобы небыло вращения на месте 
+        _rigidbody.angularVelocity = Vector3.zero; ;// РІРµРєС‚РѕСЂ СѓРіР»РѕРІРѕР№ СЃРєРѕСЂРѕСЃС‚Рё С‡С‚РѕР±С‹ РЅРµР±С‹Р»Рѕ РІСЂР°С‰РµРЅРёСЏ РЅР° РјРµСЃС‚Рµ 
     }
 
     private void CheckingPressedKey()
@@ -95,7 +102,7 @@ public class PlayerController : MonoBehaviour
     {
         float heightCollayderCrouch = 1f;
         float sizeCollayderYCrouch = 0.48f;
-        float dividerSpeedCrouch =  2;
+        float dividerSpeedCrouch = 2;
 
         if (_isGrounded)
         {
@@ -120,7 +127,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+       
         _health -= damage;
+        _slider.value -= damage;
         Debug.Log(_health);
     }
 }
