@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _rotationeSpeed = 10f;
-    [SerializeField] private float _speed = 4f;
+    [SerializeField] private float _rotationeSpeed;
+    [SerializeField] private float _speed;
     [SerializeField] private Transform _groundCheckerTransform;
     [SerializeField] private LayerMask _notPlayerMask;
-    [SerializeField] private float _jumpForce = 2f;
+    [SerializeField] private float _jumpForce;
 
     [SerializeField] public Slider _slider;
 
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
     private void Crouch()
     {
         float heightCollayderCrouch = 1f;
-        float sizeCollayderYCrouch = 0.48f;
+        float sizeCollayderYCrouch = 0.39f;
         float dividerSpeedCrouch = 2;
 
         if (_isGrounded)
@@ -116,8 +116,8 @@ public class PlayerController : MonoBehaviour
     private void UnCrouch()
     {
         float speedStandart = 5;
-        float heightCollayderOriginal = 1.24834f;
-        float sizeCollayderYOriginal = 0.6217127f;
+        float heightCollayderOriginal = 1.306199f;
+        float sizeCollayderYOriginal = 0.57f;
 
         _animator.SetBool("IsCrouching", false);
         _speed = speedStandart;

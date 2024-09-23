@@ -6,6 +6,8 @@ public class FifthTypePitfall : MonoBehaviour
     private Renderer _renderer;
     private Rigidbody _rigidbody;
 
+    [SerializeField] private float _pause;
+
     private IEnumerator _IEnumerator;
 
     private void Start()
@@ -25,9 +27,7 @@ public class FifthTypePitfall : MonoBehaviour
 
     private IEnumerator Counter()
     {
-        float pause = 1f;
-
-        var wait = new WaitForSeconds(pause);
+        var wait = new WaitForSeconds(_pause);
 
         _renderer.material.color = Color.red;
 

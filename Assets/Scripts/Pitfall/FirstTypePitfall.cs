@@ -67,14 +67,19 @@ public class FirstTypePitfall : MonoBehaviour
 
     private void DoDamage()
     {
-        int damage = 10;
+        int damage = 40;
 
         _playerController.TakeDamage(damage);
     }
 
     private void OnCollisionExit()
     {
-        _renderer.material.color = _colorStart;
+        byte colorRed = 109;
+        byte colorGreen = 217;
+        byte colorBlue = 167;
+        byte transparency = 255;
+
+        _renderer.material.color = new Color32(colorRed, colorGreen, colorBlue, transparency);
         StopCoroutine(_IEnumerator);
     }
 }
