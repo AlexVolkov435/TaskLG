@@ -18,10 +18,10 @@ public class TrapRotate : MonoBehaviour
         _trapSaw2.GetComponent<Animator>();
         _trapSaw3.GetComponent<Animator>();
 
-        StartCoroutine(Counter());
+        StartCoroutine(AnimationStart());
     }
 
-    private IEnumerator Counter()
+    private IEnumerator AnimationStart()
     {
         float pause = 1f;
 

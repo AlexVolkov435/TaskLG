@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class FifthTypePitfall : MonoBehaviour
 {
     private Renderer _renderer;

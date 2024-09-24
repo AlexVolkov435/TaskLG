@@ -5,9 +5,9 @@ using UnityEngine;
 public class Thorns : MonoBehaviour
 {
     [SerializeField] private PlayerController _playerController;
-    private int _damage = 20;
 
-    private int _jumpForce = 7;
+    private int _damage = 20;
+    private int _jumpForce = 6;
 
     private void OnCollisionEnter(Collision collision)
     {
