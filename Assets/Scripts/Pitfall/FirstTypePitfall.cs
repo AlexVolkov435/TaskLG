@@ -9,9 +9,6 @@ public class FirstTypePitfall : MonoBehaviour
     private IEnumerator _IEnumerator;
 
     private Renderer _renderer;
-
-    private Color _color;
-    private Color _colorStart;
   
     private void Start()
     {
@@ -67,7 +64,7 @@ public class FirstTypePitfall : MonoBehaviour
 
     private void DoDamage()
     {
-        int damage = 40;
+        int damage = 30;
 
         _playerController.TakeDamage(damage);
     }

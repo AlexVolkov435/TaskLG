@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _rotationeSpeed;
     [SerializeField] private float _speed;
-    [SerializeField] private Transform _groundCheckerTransform;
-    [SerializeField] private LayerMask _notPlayerMask;
     [SerializeField] private float _jumpForce;
+ 
+    [SerializeField] private Transform _groundCheckerTransform;
+    [SerializeField] private GameObject _defeat;
+    [SerializeField] private LayerMask _notPlayerMask;
 
     [SerializeField] public Slider _slider;
 
@@ -18,14 +20,12 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider _capsuleCollider;
     private bool _isGrounded;
 
-
-
     private int _maxLength = 1;
-
     private int _health = 100;
 
     private void Start()
     {
+        _defeat.SetActive(false);
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
@@ -127,9 +127,16 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-       
-        _health -= damage;
-        _slider.value -= damage;
-        Debug.Log(_health);
+        if (_health - damage > 0)
+        {
+            _health -= damage;
+            _slider.value -= damage;
+        }
+        else
+        {
+            _slider.value -= damage;
+            _defeat.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 }

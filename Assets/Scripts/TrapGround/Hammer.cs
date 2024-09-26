@@ -11,10 +11,13 @@ public class Hammer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        DoDamage();
-        collision.rigidbody.AddForce(new Vector3(2,2,0) * _jumpForce, ForceMode.Impulse);
+        if (collision.gameObject.TryGetComponent<PlayerController>(out var pitfall))
+        {
+            DoDamage();
+            collision.rigidbody.AddForce(new Vector3(2, 2, 0) * _jumpForce, ForceMode.Impulse);
+        }
     }
-
+        
     private void DoDamage()
     {
         _playerController.TakeDamage(_damage);

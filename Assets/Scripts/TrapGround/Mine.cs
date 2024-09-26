@@ -7,7 +7,10 @@ public class Mine : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        DoDamage();
+        if (collision.gameObject.TryGetComponent<PlayerController>(out var pitfall))
+        {
+            DoDamage();
+        }
     }
 
     private void DoDamage()

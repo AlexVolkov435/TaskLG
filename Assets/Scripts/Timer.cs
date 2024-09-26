@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _textTimer;
 
-    private bool _isTimerRunning  = false;
+    public bool IsRunning { get; set; }
 
     private void Start()
     {
@@ -16,10 +16,15 @@ public class Timer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_isTimerRunning == true)
+        if (IsRunning == true)
         {
-            _timeStart += Time.deltaTime;
-            _textTimer.text = _timeStart.ToString("F2");
+            StartTimer();
         }
+    }
+
+    public void StartTimer()
+    {
+        _timeStart += Time.deltaTime;
+        _textTimer.text = _timeStart.ToString("F2");
     }
 }
