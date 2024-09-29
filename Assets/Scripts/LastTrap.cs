@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class LastTrap : MonoBehaviour
@@ -11,14 +10,14 @@ public class LastTrap : MonoBehaviour
 
     private void Start()
     {
-        _trap.SetActive(false);    
+        _trap.SetActive(false);
     }
 
     private void OnTriggerEnter()
     {
         _trap.SetActive(true);
-      
+
         _trapPosition.isKinematic = false;
-        _trapPosition.AddForce(new Vector3(0,0,-2) * _jumpForce, ForceMode.Impulse);
+        _trapPosition.AddForce(new Vector3(0, 0, -2) * _jumpForce, ForceMode.Impulse);
     }
 }

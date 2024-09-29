@@ -14,5 +14,6 @@ public class FinishTrigger : MonoBehaviour
     {
         _timer.IsRunning = false;
         _winner.SetActive(true);
+        Time.timeScale = 0;
     }
 }

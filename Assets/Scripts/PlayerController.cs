@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +7,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationeSpeed;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
- 
+
     [SerializeField] private Transform _groundCheckerTransform;
     [SerializeField] private GameObject _defeat;
     [SerializeField] private LayerMask _notPlayerMask;
 
-    [SerializeField] public Slider _slider;
+    [SerializeField] private Slider _slider;
+    [SerializeField] private TextMeshProUGUI _textHP;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -21,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
 
     private int _maxLength = 1;
-    private int _health = 100;
+    private int _currentHealth = 100;
+    private int _allHealth = 100;
 
     private void Start()
     {
@@ -29,11 +31,13 @@ public class PlayerController : MonoBehaviour
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        _slider.maxValue = _health;
+        _slider.maxValue = _currentHealth;
     }
 
     private void Update()
     {
+        _textHP.text = $"{_currentHealth}/{_allHealth}";
+
         Move();
         CheckingPressedKey();
 
@@ -127,16 +131,22 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (_health - damage > 0)
+        if (_currentHealth - damage > 0)
         {
-            _health -= damage;
-            _slider.value -= damage;
+            SubtractHealth(damage);
         }
         else
         {
-            _slider.value -= damage;
+            SubtractHealth(damage);
+
             _defeat.SetActive(true);
             Time.timeScale = 0;
         }
+    }
+
+    private void SubtractHealth(int damage)
+    {
+        _currentHealth -= damage;
+        _slider.value -= damage;
     }
 }

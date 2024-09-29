@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class FifthTypePitfall : MonoBehaviour
 {
-    private Renderer _renderer;
-    private Rigidbody _rigidbody;
-
     [SerializeField] private float _pause;
 
+    private Renderer _renderer;
+    private Rigidbody _rigidbody;
     private IEnumerator _IEnumerator;
 
     private void Start()

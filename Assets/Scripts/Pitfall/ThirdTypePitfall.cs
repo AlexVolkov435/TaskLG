@@ -3,7 +3,7 @@ using UnityEngine;
 public class ThirdTypePitfall : MonoBehaviour
 {
     [SerializeField] Transform _rotationCentre;
-    
+
     private float _rotationSpeedPitfall = 3f;
 
     private bool _isCollision = false;

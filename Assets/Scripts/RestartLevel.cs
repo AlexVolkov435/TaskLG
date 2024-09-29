@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class RestartLevel : MonoBehaviour
 {
-    [SerializeField]  private GameObject _defeat;
+    [SerializeField] private GameObject _defeat;
     public static RestartLevel Restart;
 
     private void Start()
