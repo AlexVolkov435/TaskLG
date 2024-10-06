@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Slider _slider;
     [SerializeField] private TextMeshProUGUI _textHP;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSourceDefeat;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -24,6 +27,11 @@ public class PlayerController : MonoBehaviour
     private int _maxLength = 1;
     private int _currentHealth = 100;
     private int _allHealth = 100;
+
+    private void Awake()
+    {
+        
+    }
 
     private void Start()
     {
@@ -39,17 +47,33 @@ public class PlayerController : MonoBehaviour
         _textHP.text = $"{_currentHealth}/{_allHealth}";
 
         Move();
+      
         CheckingPressedKey();
 
         if (Physics.CheckSphere(_groundCheckerTransform.position, _radiusSphere, _notPlayerMask))
         {
             _animator.SetBool("IsInAir", false);
             _isGrounded = true;
+            AudioPlayback();
         }
         else
         {
+            _audioSource.Pause();
             _animator.SetBool("IsInAir", true);
             _isGrounded = false;
+        }
+    }
+
+    private void AudioPlayback()
+    {
+        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.35f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.35f)
+        {
+            if (_audioSource.isPlaying) return;
+            _audioSource.Play();
+        }
+        else
+        {
+            _audioSource.Pause();
         }
     }
 
@@ -59,9 +83,10 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 directionVector = new Vector3(horizontal, 0, vertical);
-
+       
         if (directionVector.magnitude > Mathf.Abs(0.05f))
         {
+ 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(directionVector), Time.deltaTime * _rotationeSpeed);
         }
 
@@ -140,6 +165,7 @@ public class PlayerController : MonoBehaviour
             SubtractHealth(damage);
 
             _defeat.SetActive(true);
+            _audioSourceDefeat.Play();
             Time.timeScale = 0;
         }
     }
